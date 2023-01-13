@@ -1,0 +1,58 @@
+{# Boucle for Pour 10 itérations #}
+{#
+{% for spectacle in 0..10 %}
+  <h2>titre</h2>
+{% endfor %}
+#}
+
+{# Boucle for Pour 10 itérations #}
+
+
+{% extends "index.twig" %}
+
+{% block content %}
+  <h3>This is my archive</h3>
+  
+  
+
+<ul class="flex gap-6 flex-wrap py-12 mx-auto max-w-3xl">
+
+{% for spectacle in spectacles %}
+
+<li class="rounded overflow-hidden shadow-lg">
+  <a class="md:flex" href="{{ spectacle.link }}">
+
+    {% set image = Image(spectacle.thumbnail) %}
+    <img class="w-full md:w-2/5 object-cover object-center" src="{{ spectacle.thumbnail.src }}" alt="{{ spectacle.title }}">
+
+    <div class="px-6 py-4">
+      <h2 class="font-bold text-xl mb-1">{{ spectacle.title }}</h2>
+      <h3 class="font-semibold text-lg mb-1">{{ spectacle.artiste }}</h3>
+      <p class="text-gray-700 mb-1">Du {{ spectacle.date_de_debut|date('j F') }} au {{ spectacle.date_de_fin|date('j F') }}</p>
+      <p class="text-gray-700 text-sm mb-1">Durée : {{ spectacle.duree }}</p>
+      <p class="text-gray-700 text-sm mb-2">{{ spectacle.preview.length(20).read_more('') }}</p>
+      {#{{ spectacle.author }}#}
+      {#{{ spectacle.date }}#}
+      {% if spectacle.gratuit == true %}
+          <span class="float-left text-white inline-block bg-gray-600 rounded-full px-3 py-1 text-sm font-semibold mr-1 mb-2">Gratuit</span>
+      {% else %}
+          {# Markup for plain text header #}
+      {% endif %}
+      <div class="">
+        {% for term in spectacle.terms %}
+            {#{{ term.id }}#}
+            {#{{ term.slug }}#}
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1 mb-2">{{ term.name }}</span>
+            {#{{ term.taxonomy }}#}
+            {#{{ term.parent }}#}
+        {% endfor %}
+      </div>
+    </div>
+  </a>
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% endblock %}
